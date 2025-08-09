@@ -30,14 +30,14 @@ public class CourseController {
         return new ResponseEntity<>(courses, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/{id}", produces = "application/json")
+    @GetMapping(value = "/id/{id}", produces = "application/json")
     public ResponseEntity<Course> getCourseById(@PathVariable int id) {
         Optional<Course> course = courseService.getCourseById(id);
         return course.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping(value = "/{id}", produces = "application/json", consumes = "application/json")
+    @PutMapping(value = "/update/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Course> updateCourse(@PathVariable int id, @RequestBody Course newCourse) {
         boolean updated = courseService.updateCourse(id, newCourse);
         if (updated) {
@@ -47,7 +47,7 @@ public class CourseController {
         }
     }
 
-    @DeleteMapping(value = "/{id}", produces = "application/json")
+    @DeleteMapping(value = "/delete/{id}", produces = "application/json")
     public ResponseEntity<Void> deleteCourse(@PathVariable int id) {
         boolean deleted = courseService.deleteCourse(id);
         if (deleted) {
@@ -56,17 +56,5 @@ public class CourseController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-    @GetMapping("/health")
-    public String healthCheck() {
-        return "UP";
-    }
-
-
-    @GetMapping("/welcome")
-    public String greetings() {
-        return "Hello Techie , AWS CICD Example working fine !";
-    }
-
 
 }
