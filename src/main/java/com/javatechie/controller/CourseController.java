@@ -18,13 +18,13 @@ public class CourseController {
     private CourseService courseService;
 
 
-    @PostMapping(produces = "application/json", consumes = "application/json")
+    @PostMapping(value="/create" ,produces = "application/json", consumes = "application/json")
     public ResponseEntity<Course> addCourse(@RequestBody Course course) {
         courseService.addCourse(course);
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
-    @GetMapping(produces = "application/json")
+    @GetMapping(value ="/getAll",produces = "application/json")
     public ResponseEntity<List<Course>> getAllCourses() {
         List<Course> courses = courseService.getAllCourses();
         return new ResponseEntity<>(courses, HttpStatus.OK);
