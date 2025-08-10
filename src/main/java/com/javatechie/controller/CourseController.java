@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/courses")
+@RequestMapping("/course")
 public class CourseController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class CourseController {
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
-    @GetMapping(value ="/getAllCourses",produces = "application/json")
+    @GetMapping(value ="/getAll",produces = "application/json")
     public ResponseEntity<List<Course>> getAllCourses() {
         List<Course> courses = courseService.getAllCourses();
         return new ResponseEntity<>(courses, HttpStatus.OK);
@@ -37,7 +37,7 @@ public class CourseController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PutMapping(value = "/update/id/{id}", produces = "application/json", consumes = "application/json")
+    @PutMapping(value = "/update/{id}", produces = "application/json", consumes = "application/json")
     public ResponseEntity<Course> updateCourse(@PathVariable int id, @RequestBody Course newCourse) {
         boolean updated = courseService.updateCourse(id, newCourse);
         if (updated) {
@@ -47,14 +47,14 @@ public class CourseController {
         }
     }
 
-    @DeleteMapping(value = "/delete/id/{id}", produces = "application/json")
-    public ResponseEntity<Void> deleteCourse(@PathVariable int id) {
-        boolean deleted = courseService.deleteCourse(id);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
+//    @DeleteMapping(value = "/delete/{id}", produces = "application/json")
+//    public ResponseEntity<Void> deleteCourse(@PathVariable int id) {
+//        boolean deleted = courseService.deleteCourse(id);
+//        if (deleted) {
+//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//        } else {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//    }
 
 }
