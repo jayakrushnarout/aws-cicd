@@ -47,14 +47,14 @@ public class CourseController {
         }
     }
 
-//    @DeleteMapping(value = "/delete/{id}", produces = "application/json")
-//    public ResponseEntity<Void> deleteCourse(@PathVariable int id) {
-//        boolean deleted = courseService.deleteCourse(id);
-//        if (deleted) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        } else {
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        }
-//    }
+    @DeleteMapping(value = "/delete/{id}", produces = "application/json")
+    public ResponseEntity<Void> deleteCourse(@PathVariable int id) {
+        boolean deleted = courseService.deleteCourse(id);
+        if (deleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
