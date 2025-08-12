@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/courses")
 public class CourseController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class CourseController {
         return new ResponseEntity<>(course, HttpStatus.CREATED);
     }
 
-    @GetMapping(value ="/getAll",produces = "application/json")
+    @GetMapping(value ="/getAllCourses",produces = "application/json")
     public ResponseEntity<List<Course>> getAllCourses() {
         List<Course> courses = courseService.getAllCourses();
         return new ResponseEntity<>(courses, HttpStatus.OK);
