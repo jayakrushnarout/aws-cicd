@@ -1,6 +1,8 @@
 package com.javatechie.service;
 
 import com.javatechie.dto.Course;
+import com.javatechie.repository.CourseRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,37 +13,46 @@ import java.util.Optional;
 public class CourseService {
 
     //RDS DB
-    private final List<Course> courses = new ArrayList<>();
+    @Autowired
+    private CourseRepository courseRepository;
+
+
 
     // Create a new course
     public void addCourse(Course course) {
-        courses.add(course);
+        courseRepository.save(course);
     }
 
     // Retrieve all courses
     public List<Course> getAllCourses() {
-        return courses;
+        return courseRepository.findAll();
     }
 
     // Retrieve a course by id
     public Optional<Course> getCourseById(int id) {
-        return courses.stream()
-                .filter(course -> course.getId() == id)
-                .findFirst();
+        return courseRepository.findById(id);
     }
 
     // Update a course
     public boolean updateCourse(int id, Course newCourse) {
-        return getCourseById(id).map(existingCourse -> {
-            courses.remove(existingCourse);
-            courses.add(newCourse);
+        Optional<Course> existingCourseOpt = getCourseById(id);
+        if (existingCourseOpt.isPresent()) {
+            Course existingCourse = existingCourseOpt.get();
+            existingCourse.setName(newCourse.getName());
+            existingCourse.setPrice(newCourse.getPrice());
+            courseRepository.save(existingCourse);
             return true;
-        }).orElse(false);
+        }
+        return false;
     }
 
     // Delete a course by id
     public boolean deleteCourse(int id) {
-        return courses
-                .removeIf(course -> course.getId() == id);
+        Optional<Course> existingCourseOpt = getCourseById(id);
+        if (existingCourseOpt.isPresent()) {
+            courseRepository.delete(existingCourseOpt.get());
+            return true;
+        }
+        return false;
     }
 }

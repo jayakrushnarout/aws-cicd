@@ -14,9 +14,13 @@ import java.util.Optional;
 @RequestMapping("/courses")
 public class CourseController {
 
-    @Autowired
+
     private CourseService courseService;
 
+    @Autowired
+    public CourseController(CourseService courseService) {
+        this.courseService = courseService;
+    }
 
     @PostMapping(value="/create" ,produces = "application/json", consumes = "application/json")
     public ResponseEntity<Course> addCourse(@RequestBody Course course) {
